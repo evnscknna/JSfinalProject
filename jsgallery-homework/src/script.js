@@ -5,30 +5,38 @@ function upDate(previewPic){
     console.log('upDate triggered');
     console.log('alt:', previewPic.alt);
     console.log('src:', previewPic.src);
-    // Get the main image div
-    var imageDiv = document.getElementById('image');
-    // Change background image
-    imageDiv.style.backgroundImage = "url('" + previewPic.src + "')";
-    // Change text to alt text
-    imageDiv.innerHTML = previewPic.alt;
+    // Get the main image elements
+    var mainImg = document.getElementById('main-img');
+    var mainAlt = document.getElementById('main-alt');
+    // Remove dynamic resizing
+    mainImg.src = previewPic.src;
+    mainImg.alt = previewPic.alt;
+    mainImg.style.display = 'block';
+    mainAlt.style.display = 'none';
+    mainImg.onerror = function() {
+        mainImg.style.display = 'none';
+        mainAlt.textContent = previewPic.alt;
+        mainAlt.style.display = 'flex';
+    };
 }
 
 function unDo(){
     // Log to check event
     console.log('unDo triggered');
-    // Get the main image div
-    var imageDiv = document.getElementById('image');
-    // Reset background image
-    imageDiv.style.backgroundImage = "url('')";
-    // Reset text
-    imageDiv.innerHTML = "Hover over an image below to display here.";
+    // Get the main image elements
+    var mainImg = document.getElementById('main-img');
+    var mainAlt = document.getElementById('main-alt');
+    // Remove dynamic resizing
+    mainImg.removeAttribute('src');
+    mainImg.alt = '';
+    mainImg.style.display = 'none';
+    mainAlt.textContent = '';
+    mainAlt.style.display = 'none';
 }
 
-// Add event listeners and accessibility features
+// On page load, set default state
 window.onload = function() {
-    // Add tabindex to all preview images
     addTabFocus();
-    // Add event listeners
     const previews = document.querySelectorAll('.preview');
     previews.forEach(function(img) {
         img.addEventListener('mouseover', function() {
@@ -48,6 +56,8 @@ window.onload = function() {
             console.log('blur triggered');
         });
     });
+    // Set default state
+    unDo();
     console.log('window.onload triggered');
 }
 
