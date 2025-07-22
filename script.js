@@ -1,5 +1,3 @@
-/*Name this external file gallery.js*/
-
 function upDate(previewPic){
     // Log to check event and previewPic properties
     console.log('upDate triggered');
@@ -8,7 +6,7 @@ function upDate(previewPic){
     // Get the main image elements
     var mainImg = document.getElementById('main-img');
     var mainAlt = document.getElementById('main-alt');
-    // Remove dynamic resizing
+    /// Remove dynamic resizing
     mainImg.src = previewPic.src;
     mainImg.alt = previewPic.alt;
     mainImg.style.display = 'block';
