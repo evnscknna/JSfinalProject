@@ -6,22 +6,32 @@ function upDate(previewPic){
     console.log('alt:', previewPic.alt);
     console.log('src:', previewPic.src);
     // Get the main image elements
-    var imageDiv = document.getElementById('image');
+    var mainImg = document.getElementById('main-img');
     var mainAlt = document.getElementById('main-alt');
-    // Set background image and alt text
-    imageDiv.style.backgroundImage = "url('" + previewPic.src + "')";
-    mainAlt.textContent = previewPic.alt;
+    // Remove dynamic resizing
+    mainImg.src = previewPic.src;
+    mainImg.alt = previewPic.alt;
+    mainImg.style.display = 'block';
+    mainAlt.style.display = 'none';
+    mainImg.onerror = function() {
+        mainImg.style.display = 'none';
+        mainAlt.textContent = previewPic.alt;
+        mainAlt.style.display = 'flex';
+    };
 }
 
 function unDo(){
     // Log to check event
     console.log('unDo triggered');
     // Get the main image elements
-    var imageDiv = document.getElementById('image');
+    var mainImg = document.getElementById('main-img');
     var mainAlt = document.getElementById('main-alt');
-    // Reset background image and text
-    imageDiv.style.backgroundImage = "";
-    mainAlt.textContent = "Hover over an image below to display here.";
+    // Remove dynamic resizing
+    mainImg.removeAttribute('src');
+    mainImg.alt = '';
+    mainImg.style.display = 'none';
+    mainAlt.textContent = '';
+    mainAlt.style.display = 'none';
 }
 
 // On page load, set default state
